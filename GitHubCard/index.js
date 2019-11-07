@@ -1,3 +1,60 @@
+const userCard = data => {
+  const card = document.createElement('div');
+  const userImg = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const usersName = document.createElement('h3');
+  const userName = document.createElement('p');
+  const userLocation = document.createElement('p');
+  const userProfile = document.createElement('p');
+  const userProfileAddress = document.createElement('a');
+  const followerCount = document.createElement('p');
+  const followingCount = document.createElement('p');
+  const userBio = document.createElement('p');
+
+  userImg.src = data.avatar_url;
+  usersName.textContent = data.name;
+  userName.textContent = data.login;
+  userLocation.textContent = `Location: ${data.location}`;
+  userProfile.textContent = 'Profile: '
+  userProfileAddress.textContent = data.html_url;
+  followerCount.textContent = `Followers: ${data.followers}`;
+  followingCount.textContent = `Following: ${data.following}`;
+  userBio.textContent = `Bio: ${data.bio}`;
+
+
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  usersName.classList.add('name');
+  userName.classList.add('username');
+
+  card.appendChild(userImg);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(usersName);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(userLocation);
+  cardInfo.appendChild(userProfile);
+  userProfile.appendChild(userProfileAddress);
+  cardInfo.appendChild(followerCount);
+  cardInfo.appendChild(followingCount);
+  cardInfo.appendChild(userBio);
+
+  return card
+}
+
+const entryPoint = document.querySelector('.cards');
+
+axios
+  .get('https://api.github.com/users/sean-birmingham')
+  .then(response => {
+    console.log(response);
+    entryPoint.appendChild(userCard(response.data))
+  })
+  .catch(error => {
+    console.log('the data was not returned', error)
+  });
+
+
+
 /* Step 1: using axios, send a GET request to the following URL 
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
@@ -35,7 +92,7 @@ const followersArray = [];
     <h3 class="name">{users name}</h3>
     <p class="username">{users user name}</p>
     <p>Location: {users location}</p>
-    <p>Profile:  
+    <p>Profile:
       <a href={address to users github page}>{address to users github page}</a>
     </p>
     <p>Followers: {users followers count}</p>
@@ -46,7 +103,7 @@ const followersArray = [];
 
 */
 
-/* List of LS Instructors Github username's: 
+/* List of LS Instructors Github username's:
   tetondan
   dustinmyers
   justsml
